@@ -57,6 +57,12 @@ st.markdown("""
     /* Global Transparent and Visible Buttons */
     div.stButton > button {
         background-color: #FFFFFF !important; color: #A3843B !important;
+        .stApp code, .stApp pre, .news-card code, .news-card span {
+        background-color: transparent !important;
+        color: #4A3E3D !important;
+        padding: 0 !important;
+        font-family: 'Inter', sans-serif !important;
+    }
         border: 1px solid #EADCC9 !important; border-radius: 8px !important;
         font-weight: 500 !important; transition: all 0.2s ease;
     }
