@@ -25,7 +25,8 @@ if 'current_hadith_idx' not in st.session_state:
 st.markdown("""
     <style>
     .stApp { background-color: #FDFBF7 !important; color: #2C2520 !important; font-family: 'Inter', sans-serif; }
-
+    ::selection { background: #F7F3EB !important; color: #A3843B !important; }
+    ::-moz-selection { background: #F7F3EB !important; color: #A3843B !important; }
     /* Gilded Frame Card Container */
     .islamic-card { background-color: #FFFFFF; padding: 30px; border-radius: 20px; border-top: 5px solid #D4AF37; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.08); margin-bottom: 25px; }
     .hadith-text { font-size: 1.2rem; font-style: italic; color: #4A3E3D; line-height: 1.6; text-align: center; margin-bottom: 12px; padding: 0 20px; }
