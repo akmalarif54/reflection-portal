@@ -179,3 +179,64 @@ with tab2:
     hijri_months_map = {
         1: "Rajab / Sha'ban", 2: "Sha'ban / Ramadan", 3: "Ramadan / Shawwal", 4: "Shawwal / Dhu al-Qi'dah", 
         5: "Dhu al-Qi'dah / Dhu al-Hijjah", 6: "Dhu al-Hijjah / Muharram", 7: "Muharram / Safar", 
+
+8: "Safar / Rabi' al-Awwal", 9: "Rabi' al-Awwal / Rabi' al-Thani", 10: "Rabi' al-Thani / Jumada al-Ula",
+11: "Jumada al-Ula / Jumada al-Akhirah", 12: "Jumada al-Akhirah / Rajab"
+}
+
+nav_col1, nav_col2, nav_col3 = st.columns(3)
+with nav_col1:
+if st.button("◀ Prev Month", use_container_width=True): st.session_state.cal_month_offset -= 1; st.rerun()
+with nav_col2:
+st.markdown(f"{calendar.month_name[target_month]} {target_year}
+🌙 {hijri_months_map[target_month]}", unsafe_allow_html=True)
+with nav_col3:
+if st.button("Next Month ▶", use_container_width=True): st.session_state.cal_month_offset += 1; st.rerun()
+
+st.markdown("
+", unsafe_allow_html=True)
+wd_cols = st.columns(7)
+for idx, day in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]):
+wd_cols[idx].markdown(f"{day}", unsafe_allow_html=True)
+
+cal_matrix = calendar.monthcalendar(target_year, target_month)
+for week in cal_matrix:
+c_cols = st.columns(7)
+for i, day in enumerate(week):
+if day == 0: c_cols[i].write("")
+else:
+is_today = (day == today_dt.day and target_month == today_dt.month and target_year == today_dt.year)
+box_style = "day-box-active" if is_today else "day-box"
+approx_hijri_day = (day + 11) % 30 if (day + 11) % 30 != 0 else 30
+c_cols[i].markdown(f"{day}{approx_hijri_day}", unsafe_allow_html=True)
+
+**--- TAB 3: TASBIH ---**
+
+with tab3:
+st.subheader("📿 Digital Tasbih Counter")
+phrase = st.selectbox("Choose Phrase", ["SubhanAllah", "Alhamdulillah", "Allahu Akbar", "Astaghfirullah"])
+if phrase != st.session_state.tasbih_phrase:
+st.session_state.tasbih_phrase = phrase
+st.session_state.tasbih_count = 0
+
+st.markdown(f"{st.session_state.tasbih_count}{st.session_state.tasbih_phrase}", unsafe_allow_html=True)
+
+b1, b2 = st.columns(2)
+with b1:
+if st.button("📿 TAP TO COUNT", use_container_width=True): st.session_state.tasbih_count += 1; st.rerun()
+with b2:
+if st.button("🔄 Reset", use_container_width=True): st.session_state.tasbih_count = 0; st.rerun()
+
+**--- TAB 4: GLOBAL FINANCE NEWS ---**
+
+with tab4:
+st.subheader("📊 Global Islamic Banking & Market Updates")
+for item in news_data.ITEMS:
+st.markdown(f"{item['title']}📅 {item['date']}{item['desc']}", unsafe_allow_html=True)
+
+**--- TAB 5: SHARIAH KNOWLEDGE HUB ---**
+
+with tab5:
+st.subheader("💡 Islamic Finance Foundations & Concepts")
+for Concept in news_data.KNOWLEDGE:
+st.markdown(f"📌 {Concept['term']}{Concept['concept']}", unsafe_allow_html=True)
